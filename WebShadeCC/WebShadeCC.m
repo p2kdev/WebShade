@@ -7,6 +7,17 @@
 
 @implementation WebShadeCC
 
+	-(id)init
+	{
+		if ((self = [super init]))
+		{
+			NSMutableDictionary *tweakSettings = [[NSMutableDictionary alloc] initWithContentsOfFile:prefFilePath];
+			id enabledValue = [tweakSettings objectForKey:@"isEnabled"];
+			_selected = enabledValue ? [enabledValue boolValue] : YES;
+		}
+		return self;
+	}
+
 	- (UIImage *)iconGlyph {
 		return [UIImage imageNamed:@"Icon" inBundle:[NSBundle bundleForClass:[self class]]];
 	}
@@ -16,9 +27,7 @@
 	}
 
 	- (BOOL)isSelected {
-		NSMutableDictionary *tweakSettings = [[NSMutableDictionary alloc] initWithContentsOfFile:prefFilePath];
-		id enabledValue = [tweakSettings objectForKey:@"isEnabled"];
-		return enabledValue ? [enabledValue boolValue] : YES;
+		return _selected;
 	}
 
 	- (void)setSelected:(BOOL)selected {
